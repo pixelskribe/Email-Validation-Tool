@@ -6,6 +6,12 @@
 
 **An extensible email validation library for PHP 7+**
 
+##Note!!
+
+**This fork extends the EmailVailidatorFactory class to support selecting/excluding which validators you want to use.**
+
+
+
 The aim of this library is to offer a more detailed email validation report than simply checking if an email is the valid format, and also to make it possible to easily add custom validations.
 
 Currently this tool checks the following:
@@ -24,9 +30,27 @@ Currently this tool checks the following:
 ^ **Data used for these checks can be found [here](https://github.com/daveearley/Email-Validation-Tool/tree/master/src/data)**
 
 # Installation
-
-```bash
-composer require daveearley/daves-email-validation-tool
+*In composer.json*
+```
+ "require":{
+    "daveearley/Email-Validation-Tool": "dev-master" 
+ },   
+ "repositories": [
+        {
+           "type": "package",
+           "package": {
+                "name": "daveearley/Email-Validation-Tool",
+                "version": "dev-master",
+                "source": {
+                    "url": "https://github.com/pixelskribe/Email-Validation-Tool.git",
+                    "type": "git",
+                    "reference": "master"
+                },
+                "autoload": {
+                    "classmap": [""]
+                }
+            }
+        },
 ```
 
 # Usage
@@ -36,7 +60,8 @@ composer require daveearley/daves-email-validation-tool
 // Include the composer autoloader
 require __DIR__ . '/vendor/autoload.php';
 
-$validator = EmailValidation\EmailValidatorFactory::create('dave@gmoil.con');
+$validators = [0,3,4]; //i.e. key of validators to use (see EmailValidatorFactory.php > $defaultValidators)
+$validator = EmailValidation\EmailValidatorFactory::create($emailAddress, $validators);
 
 $jsonResult = $validator->getValidationResults()->asJson();
 $arrayResult = $validator->getValidationResults()->asArray();

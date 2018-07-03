@@ -47,12 +47,14 @@ class EmailValidatorFactory
         return $emailValidator;
     }
 
-    public static function setValidators($validators){
-        $available = self::$defaultValidators;
-        foreach($available as $key => $value){
-            if(!in_array($key,$validators))
-                unset($available[$key]);
-        }
-        return $available;
-    }
+	public static function setValidators($validators){
+		$available = self::$defaultValidators;
+		if($validators) {
+			foreach ($available as $key => $value) {
+				if (!in_array($key, $validators))
+					unset($available[$key]);
+			}
+		}
+		return $available;
+	}
 }
